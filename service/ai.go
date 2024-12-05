@@ -70,8 +70,7 @@ func tryGeminiSuggestions(req GiftRequest) ([]Gift, error) {
 		}
 	}
 
-	// Log the full response for debugging
-	log.Printf("Gemini API Response: %s", responseText)
+	
 
 	// Parse Gemini response and convert to Gift suggestions 
 	suggestions := parseGiftSuggestions(responseText)
