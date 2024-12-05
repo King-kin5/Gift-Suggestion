@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 Magical Gift Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-gradient-to-r from-red-100 to-green-100 min-h-screen flex items-center justify-center">
+    <div class="max-w-2xl w-full mx-auto bg-white p-8 rounded-xl shadow-2xl border-4 border-green-600">
+        <h1 class="text-4xl font-bold text-center mb-4 text-red-700 flex items-center justify-center">
+            <svg class="w-12 h-12 mr-3 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zm0 12l-10-5 10 5 10-5v7l-10 5-10-5v-7z"/>
+            </svg>
+            🎁 Magical Gift Finder 🎄
+        </h1>
+        
+        <p class="text-center text-gray-600 mb-6">
+            The ultimate gift suggestion tool for birthdays, weddings, anniversaries, holidays, and special occasions!
+        </p>
+
+        <form 
+            hx-post="/suggest-gift" 
+            hx-target="#suggestions" 
+            hx-indicator="#loading"
+            class="space-y-4"
+        >
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Age</label>
+                    <input type="number" name="age" required class="mt-1 block w-full rounded-md border-2 border-green-300 p-2" placeholder="Enter age">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Budget ($)</label>
+                    <input type="number" step="0.01" name="budget" required class="mt-1 block w-full rounded-md border-2 border-red-300 p-2" placeholder="Enter budget">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Interests (comma-separated)</label>
+                <input type="text" name="interests" required class="mt-1 block w-full rounded-md border-2 border-green-300 p-2" placeholder="e.g., gaming, cooking, music">
+            </div>
+
+            <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition duration-300 flex items-center justify-center">
+                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+                </svg>
+                Find Perfect Gifts
+            </button>
+        </form>
+
+        <div 
+            id="loading" 
+            class="htmx-indicator text-center mt-4 hidden"
+        >
+            🔍 Searching for amazing gifts...
+        </div>
+
+        <div 
+            id="suggestions" 
+            class="mt-6 grid md:grid-cols-2 gap-4"
+        >
+            <!-- Gift suggestions will be dynamically populated here -->
+        </div>
+    </div>
+</body>
+</html>
