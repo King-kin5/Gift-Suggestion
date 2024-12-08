@@ -26,7 +26,7 @@ func main()  {
 	}))
 	
 
-	e.Static("/","public")
+	e.Static("/static","static")
 	// Routes
 	e.GET("/", func(c echo.Context) error {
 		return c.Redirect(http.StatusMovedPermanently, "/home")
