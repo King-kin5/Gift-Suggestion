@@ -21,6 +21,17 @@ func generateGiftSuggestions(req GiftRequest) (GiftResponse, error) {
 		log.Printf("Gemini API error: %v. Falling back to default suggestions.", err)
 		suggestions = generateFallbackSuggestions(req)
 	}
+	for i := range suggestions {
+		images, err := searchProductImages(suggestions[i].Name)
+		if err != nil {
+			log.Printf("Failed to find images for %s: %v", suggestions[i].Name, err)
+			continue
+		}
+		if len(images)>2{
+			images=images[:2]
+		}
+		suggestions[i].Images = images
+	}
 
 	return GiftResponse{Suggestions: suggestions}, nil
 }
@@ -70,8 +81,7 @@ func tryGeminiSuggestions(req GiftRequest) ([]Gift, error) {
 		}
 	}
 
-	// Log the full response for debugging
-	log.Printf("Gemini API Response: %s", responseText)
+	
 
 	// Parse Gemini response and convert to Gift suggestions 
 	suggestions := parseGiftSuggestions(responseText)

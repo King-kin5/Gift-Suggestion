@@ -14,4 +14,7 @@ type Gift struct {
 	Description string  `json:"description"`
 	Price       float64 `json:"price"`
 	Category    string  `json:"category"`
+	Images      []string `json:"images"`
+	
+	
 }
