@@ -17,8 +17,9 @@ Gift Suggestion is a web application built in Go that helps users find the perfe
 
 2. Install the required dependencies:
   ```bash
-  go get -u github.com/labstack/echo/v4
-  ```bash
+   go get -u github.com/labstack/echo/v4
+
+   ```bash
   go get -u github.com/labstack/echo/v4/middleware
 
 # Usage
@@ -43,11 +44,14 @@ POST /suggest-gift: Handles gift suggestion requests
 We welcome contributions to enhance the project. To contribute:
 1. Fork the repository.
 2. Create a new branch:
-git checkout -b feature-name
+   ```bash
+  git checkout -b feature-name
 
 3. Make your changes and commit them:
-git commit -m "Description of feature"
-4. Push to the branch:
-git push origin feature-name
+            ```bash
+   git commit -m "Description of feature"
+4. Push to the branch
+   ```bash
+  git push origin feature-name
 
 5.Create a pull request.
