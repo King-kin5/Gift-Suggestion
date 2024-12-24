@@ -62,4 +62,3 @@ We welcome contributions to enhance the project. To contribute:
 
 5. Create a pull request.
 
-t
