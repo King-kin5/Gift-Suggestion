@@ -5,10 +5,9 @@ Gift Suggestion is a web application built in Go that helps users find the perfe
 ## Features
 
 - User-friendly interface for inputting gift criteria
-- Extensive database of gift suggestions
 - Personalized gift recommendations
 - Filtering options to narrow down gift choices
-- Integration with online stores for easy purchasing
+
 
 ## Installation
 
