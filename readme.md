@@ -21,13 +21,13 @@ Gift Suggestion is a web application built in Go that helps users find the perfe
    go get -u github.com/labstack/echo/v4/middleware
 
 ## Usage
-Set the PORT environment variable if you want to use a port other than the default 8080:
-export PORT=8080
-Start the application:
-    ```bash
- go run main.go
+- Set the PORT environment variable if you want to use a port other than the default 8080:
+- export PORT=8080
+- Start the application:
+  ```bash
+   go run main.go
 
-Open your web browser and go to http://localhost:8080 to access the application.
+- Open your web browser and go to http://localhost:8080 to access the application.
 
 ## Routes
 GET /: Redirects to /home
@@ -42,10 +42,10 @@ We welcome contributions to enhance the project. To contribute:
  git checkout -b feature-name
 
 3. Make your changes and commit them:
-  ```bash
+   ```bash
  git commit -m "Description of feature"
 4. Push to the branch:
-  ```bash
+   ```bash
   git push origin feature-name
 
 5.Create a pull request.
