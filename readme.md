@@ -11,22 +11,24 @@ Gift Suggestion is a web application built in Go that helps users find the perfe
 
 ## Installation
 
- 1. Clone the repository:
+1. Clone the repository:
    ```bash
    git clone https://github.com/King-kin5/Gift-Suggestion.git
 
- 2. Install the required dependencies:
+2. Install the required dependencies:
   ```bash
    go get -u github.com/labstack/echo/v4
-   go get -u github.com/labstack/echo/v4/middleware
+  go get -u github.com/labstack/echo/v4/middleware
 
 # Usage
 1. Set the PORT environment variable if you want to use a port other than the default 8080:
-  export
+     ```bash
+export
   PORT=8080
-  Start the application:
+Start the application:
+    ```bash
  go run main.go
- Open your web browser and go to http://localhost:8080 to access the application.
+Open your web browser and go to http://localhost:8080 to access the application.
 
 # Routes
  
@@ -44,7 +46,7 @@ We welcome contributions to enhance the project. To contribute:
   git checkout -b feature-name
 
 3. Make your changes and commit them:
-   ```bash
+            ```bash
    git commit -m "Description of feature"
 4. Push to the branch
    ```bash
