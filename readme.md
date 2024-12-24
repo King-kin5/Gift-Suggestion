@@ -19,7 +19,6 @@ Gift Suggestion is a web application built in Go that helps users find the perfe
   ```bash
    go get -u github.com/labstack/echo/v4
 
-   ```bash
   go get -u github.com/labstack/echo/v4/middleware
 
 # Usage
