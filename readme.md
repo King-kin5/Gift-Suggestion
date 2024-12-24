@@ -24,8 +24,7 @@ Gift Suggestion is a web application built in Go that helps users find the perfe
   1. Set the PORT environment variable if you want to use a port other than the default 8080:
   export
   PORT=8080
- Start the application:
-    ```bash
+  Start the application:
  go run main.go
  Open your web browser and go to http://localhost:8080 to access the application.
 
@@ -45,7 +44,7 @@ We welcome contributions to enhance the project. To contribute:
   git checkout -b feature-name
 
 3. Make your changes and commit them:
-            ```bash
+   ```bash
    git commit -m "Description of feature"
 4. Push to the branch
    ```bash
