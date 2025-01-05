@@ -39,7 +39,7 @@ func generateGiftSuggestions(req GiftRequest) (GiftResponse, error) {
 func tryGeminiSuggestions(req GiftRequest) ([]Gift, error) {
 	// Set up Gemini API client 
 	ctx := context.Background() 
-	client, err := genai.NewClient(ctx, option.WithAPIKey("AIzaSyBEX-kVe-mS2sasfPKKnRvrH2xGq0z9-6E")) 
+	client, err := genai.NewClient(ctx, option.WithAPIKey("AIzaSyAEg6_913dSPuu2JaJTOttiIe-E6GwuI8I")) 
 	if err != nil { 
 		return nil, err 
 	} 
@@ -95,67 +95,73 @@ func tryGeminiSuggestions(req GiftRequest) ([]Gift, error) {
 }
 
 func generateFallbackSuggestions(req GiftRequest) []Gift {
-	// Predefined gift suggestions with some variability based on input
-	giftCategories := []string{"Electronics", "Books", "Gadgets", "Hobby", "Personal Care", "Experience", "Fashion", "Home & Kitchen"}
-	interests := req.Interests
+    // Predefined gift suggestions with some variability based on input
+    giftCategories := []string{"Electronics", "Books", "Gadgets", "Hobby", "Personal Care", "Experience", "Fashion", "Home & Kitchen"}
+    interests := req.Interests
 
-	suggestions := []Gift{}
-	rand.Seed(time.Now().UnixNano())
+    suggestions := []Gift{}
+    rand.Seed(time.Now().UnixNano())
 
-	for i := 0; i < 10; i++ {
-		// Base price calculation
-		basePrice := req.Budget / 2
-		priceVariation := basePrice * 0.5
-		price := basePrice + rand.Float64() * priceVariation
+    for i := 0; i < 10; i++ {
+        // Base price calculation
+        basePrice := req.Budget / 2
+        priceVariation := basePrice * 0.5
+        price := basePrice + (rand.Float64() * 2 - 1) * priceVariation
 
-		// Try to match interests if possible
-		category := giftCategories[rand.Intn(len(giftCategories))]
-		if len(interests) > 0 {
-			category = strings.Title(strings.ToLower(interests[rand.Intn(len(interests))]))
-		}
+        // Try to match interests if possible
+        category := giftCategories[rand.Intn(len(giftCategories))]
+        if len(interests) > 0 {
+            interestCategory := strings.Title(strings.ToLower(interests[rand.Intn(len(interests))]))
+            if contains(giftCategories, interestCategory) {
+                category = interestCategory
+            }
+        }
 
-		suggestion := Gift{
-			Name:        fmt.Sprintf("Gift %d for %d-year-old", i+1, req.Age),
-			Description: fmt.Sprintf("A thoughtful gift in the %s category", category),
-			Price:       price,
-			Category:    category,
-		}
-		suggestions = append(suggestions, suggestion)
-	}
+        suggestion := Gift{
+            Name:        fmt.Sprintf("Gift %d for %d-year-old", i+1, req.Age),
+            Description: fmt.Sprintf("A thoughtful gift in the %s category", category),
+            Price:       price,
+            Category:    category,
+        }
+        suggestions = append(suggestions, suggestion)
+    }
 
-	return suggestions
+    return suggestions
 }
+
+func contains(slice []string, item string) bool {
+    for _, s := range slice {
+        if s == item {
+            return true
+        }
+    }
+    return false
+}
+
 func parseGiftSuggestions(responseText string) []Gift {
-	suggestions := []Gift{}
-	
-	// Use a more flexible regex to match gift blocks
-	giftRegex := regexp.MustCompile(`(?:^|\n)(\d+\.)?(?:\s*)?Gift\s*Name:\s*(.+)\n*(?:\s*)?Description:\s*(.+)\n*(?:\s*)?Price:\s*\$?(\d+(?:\.\d{1,2})?)\n*(?:\s*)?Category:\s*(.+)`)
-	
-	matches := giftRegex.FindAllStringSubmatch(responseText, -1)
-	
-	for _, match := range matches {
-		// Ensure we have all the expected submatches
-		if len(match) >= 6 {
-			price, err := strconv.ParseFloat(match[4], 64)
-			if err != nil {
-				log.Printf("Error parsing price: %v", err)
-				continue
-			}
-			
-			suggestion := Gift{
-				Name:        strings.TrimSpace(match[2]),
-				Description: strings.TrimSpace(match[3]),
-				Price:       price,
-				Category:    strings.TrimSpace(match[5]),
-			}
-			suggestions = append(suggestions, suggestion)
-		}
-	}
+    suggestions := []Gift{}
+    
+    // Use a more flexible regex to match gift blocks
+    giftRegex := regexp.MustCompile(`(?:^|\n)(\d+\.)?(?:\s*)?Gift\s*Name:\s*(.+)\n*(?:\s*)?Description:\s*(.+)\n*(?:\s*)?Price:\s*\$?(\d+(?:\.\d{1,2})?)\n*(?:\s*)?Category:\s*(.+)`)
+    
+    matches := giftRegex.FindAllStringSubmatch(responseText, -1)
+    
+    for _, match := range matches {
+        // Ensure we have all the expected submatches
+        if len(match) >= 6 {
+            price, err := strconv.ParseFloat(match[4], 64)
+            if err != nil {
+                log.Printf("Error parsing price: %v", err)
+                continue
+            }
+            suggestions = append(suggestions, Gift{
+                Name:        match[2],
+                Description: match[3],
+                Price:       price,
+                Category:    match[5],
+            })
+        }
+    }
 
-	// If no suggestions found, log the full response for debugging
-	if len(suggestions) == 0 {
-		log.Printf("No suggestions parsed. Full response: %s", responseText)
-	}
-
-	return suggestions
+    return suggestions
 }
