@@ -1,8 +1,10 @@
 package service
 
-type GiftRequest struct{
-    Age int `json:"age"`
-    Interests []string `json:"interests"`
+import "github.com/google/generative-ai-go/genai"
+
+type GiftRequest struct {
+	Age       int      `json:"age"`
+	Interests []string `json:"interests"`
 	Budget    float64  `json:"budget"`
 }
 type GiftResponse struct {
@@ -10,11 +12,17 @@ type GiftResponse struct {
 }
 
 type Gift struct {
-	Name        string  `json:"name"`
-	Description string  `json:"description"`
-	Price       float64 `json:"price"`
-	Category    string  `json:"category"`
-	Images      []string `json:"images"`
-	
-	
+	Name           string   `json:"name"`
+	Description    string   `json:"description"`
+	Price          float64  `json:"price"`
+	Category       string   `json:"category"`
+	Images         []string `json:"images"`
+	Reasoning      string   `json:"reasoning"`
+	EstimatedPrice string   `json:"estimated_price"`
+}
+
+type GiftService struct {
+	GenAIClient        *genai.Client
+	GoogleSearchAPIKey string
+	GoogleSearchCX     string
 }
